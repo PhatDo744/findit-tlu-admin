@@ -71,7 +71,7 @@
                     <p class="text-sm font-medium text-gray-900">{{ Str::limit($post->title, 40) }}</p>
                     <p class="text-xs text-gray-500">{{ $post->user->name }} - {{ $post->created_at->diffForHumans() }}</p>
                 </div>
-                <span class="badge {{ $post->status === 'pending' ? 'bg-yellow-100 text-yellow-700' : 'bg-green-100 text-green-700' }}">
+                <span class="p-3 badge {{ $post->status === 'pending' ? 'bg-yellow-100 text-yellow-700' : 'bg-green-100 text-green-700' }}">
                     {{ $post->status_label }}
                 </span>
             </div>
@@ -105,7 +105,7 @@
                         <p class="text-xs text-gray-500">{{ $user->email }}</p>
                     </div>
                 </div>
-                <span class="badge {{ $user->role === 'admin' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700' }}">
+                <span class="p-3 badge {{ $user->role === 'admin' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700' }}">
                     {{ $user->role_label }}
                 </span>
             </div>

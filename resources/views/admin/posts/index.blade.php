@@ -18,7 +18,7 @@
     <form method="GET" action="{{ route('admin.posts.index') }}" class="grid grid-cols-1 md:grid-cols-6 gap-4">
         <input type="text" name="search" value="{{ request('search') }}" placeholder="Tìm kiếm tiêu đề, mô tả..."
             class="p-3 border border-gray-300 rounded-md focus:ring-tlu-blue focus:border-tlu-blue">
-        
+
         <select name="status" class="p-3 border border-gray-300 rounded-md focus:ring-tlu-blue focus:border-tlu-blue">
             <option value="">Tất cả trạng thái</option>
             <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Chờ duyệt</option>
@@ -36,9 +36,9 @@
         <select name="category" class="p-3 border border-gray-300 rounded-md focus:ring-tlu-blue focus:border-tlu-blue">
             <option value="">Tất cả danh mục</option>
             @foreach($categories as $category)
-                <option value="{{ $category }}" {{ request('category') === $category ? 'selected' : '' }}>
-                    {{ $category }}
-                </option>
+            <option value="{{ $category }}" {{ request('category') === $category ? 'selected' : '' }}>
+                {{ $category }}
+            </option>
             @endforeach
         </select>
 
@@ -96,11 +96,11 @@
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                     @if($post->image_url)
-                        <img src="{{ $post->image_url }}" alt="Post image" class="w-16 h-16 object-cover rounded-lg">
+                    <img src="{{ $post->image_url }}" alt="Post image" class="w-16 h-16 object-cover rounded-lg">
                     @else
-                        <div class="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-image text-gray-400"></i>
-                        </div>
+                    <div class="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-image text-gray-400"></i>
+                    </div>
                     @endif
                 </td>
                 <td class="px-6 py-4">
@@ -108,7 +108,7 @@
                     <div class="text-sm text-gray-500">{{ Str::limit($post->description, 60) }}</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="badge {{ $post->type === 'lost' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700' }}">
+                    <span class="badge p-3 {{ $post->type === 'lost' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700' }}">
                         {{ $post->type_label }}
                     </span>
                 </td>
@@ -120,7 +120,7 @@
                     <div class="text-sm text-gray-500">{{ $post->user->email }}</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="badge {{ 
+                    <span class="badge p-3 {{ 
                         $post->status === 'pending' ? 'bg-yellow-100 text-yellow-700' :
                         ($post->status === 'approved' ? 'bg-green-100 text-green-700' :
                         ($post->status === 'rejected' ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'))
@@ -134,22 +134,22 @@
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <div class="flex space-x-2">
                         <a href="{{ route('admin.posts.show', $post) }}" class="btn btn-icon text-blue-600 hover:text-blue-800" title="Xem chi tiết">
-                            <i class="fas fa-eye"></i>
+                            <i class=" px-2  fas fa-eye text-lg"></i>
                         </a>
-                        
+
                         @if($post->status === 'pending')
-                            <button onclick="approvePost({{ $post->id }})" class="btn btn-icon text-green-600 hover:text-green-800" title="Duyệt">
-                                <i class="fas fa-check"></i>
-                            </button>
-                            <button onclick="rejectPost({{ $post->id }})" class="btn btn-icon text-red-600 hover:text-red-800" title="Từ chối">
-                                <i class="fas fa-times"></i>
-                            </button>
+                        <button onclick="approvePost({{ $post->id }})" class="btn btn-icon text-green-600 hover:text-green-800" title="Duyệt">
+                            <i class=" px-2 fas fa-check text-lg"></i>
+                        </button>
+                        <button onclick="rejectPost({{ $post->id }})" class="btn btn-icon text-red-600 hover:text-red-800" title="Từ chối">
+                            <i class=" px-2 fas fa-times text-lg"></i>
+                        </button>
                         @endif
 
                         @if($post->status === 'approved')
-                            <button onclick="markReturnedPost({{ $post->id }})" class="btn btn-icon text-blue-600 hover:text-blue-800" title="Đánh dấu đã trả">
-                                <i class="fas fa-handshake"></i>
-                            </button>
+                        <button onclick="markReturnedPost({{ $post->id }})" class="btn btn-icon text-blue-600 hover:text-blue-800" title="Đánh dấu đã trả">
+                            <i class=" px-2 fas fa-handshake text-lg"></i>
+                        </button>
                         @endif
                     </div>
                 </td>
@@ -179,7 +179,7 @@
                 <label for="reject-reason" class="block text-sm font-medium text-gray-700 mb-2">
                     Lý do từ chối (không bắt buộc):
                 </label>
-                <textarea id="reject-reason" name="reason" rows="3" 
+                <textarea id="reject-reason" name="reason" rows="3"
                     class="w-full p-3 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500"
                     placeholder="Nhập lý do từ chối bài đăng..."></textarea>
             </div>
@@ -194,156 +194,158 @@
 
 @push('scripts')
 <script>
-let selectedPostIds = [];
-let currentPostId = null;
+    let selectedPostIds = [];
+    let currentPostId = null;
 
-function toggleBulkActions() {
-    const bulkActions = document.getElementById('bulk-actions');
-    const isHidden = bulkActions.classList.contains('hidden');
-    
-    if (isHidden) {
-        bulkActions.classList.remove('hidden');
-        document.querySelectorAll('.post-checkbox, #select-all').forEach(cb => {
-            cb.style.display = 'block';
+    function toggleBulkActions() {
+        const bulkActions = document.getElementById('bulk-actions');
+        const isHidden = bulkActions.classList.contains('hidden');
+
+        if (isHidden) {
+            bulkActions.classList.remove('hidden');
+            document.querySelectorAll('.post-checkbox, #select-all').forEach(cb => {
+                cb.style.display = 'block';
+            });
+        } else {
+            bulkActions.classList.add('hidden');
+            document.querySelectorAll('.post-checkbox, #select-all').forEach(cb => {
+                cb.style.display = 'none';
+                cb.checked = false;
+            });
+            selectedPostIds = [];
+            updateSelectedCount();
+        }
+    }
+
+    function toggleSelectAll() {
+        const selectAll = document.getElementById('select-all');
+        const postCheckboxes = document.querySelectorAll('.post-checkbox');
+
+        postCheckboxes.forEach(cb => {
+            cb.checked = selectAll.checked;
         });
-    } else {
-        bulkActions.classList.add('hidden');
-        document.querySelectorAll('.post-checkbox, #select-all').forEach(cb => {
-            cb.style.display = 'none';
-            cb.checked = false;
-        });
-        selectedPostIds = [];
+
         updateSelectedCount();
     }
-}
 
-function toggleSelectAll() {
-    const selectAll = document.getElementById('select-all');
-    const postCheckboxes = document.querySelectorAll('.post-checkbox');
-    
-    postCheckboxes.forEach(cb => {
-        cb.checked = selectAll.checked;
-    });
-    
-    updateSelectedCount();
-}
+    function updateSelectedCount() {
+        const checkedBoxes = document.querySelectorAll('.post-checkbox:checked');
+        selectedPostIds = Array.from(checkedBoxes).map(cb => cb.value);
 
-function updateSelectedCount() {
-    const checkedBoxes = document.querySelectorAll('.post-checkbox:checked');
-    selectedPostIds = Array.from(checkedBoxes).map(cb => cb.value);
-    
-    document.getElementById('selected-count').textContent = selectedPostIds.length;
-    document.getElementById('selected-post-ids').value = selectedPostIds.join(',');
-}
-
-function confirmBulkAction() {
-    if (selectedPostIds.length === 0) {
-        showToast('Vui lòng chọn ít nhất một bài đăng', 'error');
-        return false;
+        document.getElementById('selected-count').textContent = selectedPostIds.length;
+        document.getElementById('selected-post-ids').value = selectedPostIds.join(',');
     }
-    
-    const action = document.querySelector('select[name="action"]').value;
-    if (!action) {
-        showToast('Vui lòng chọn hành động', 'error');
-        return false;
-    }
-    
-    return confirm(`Bạn có chắc chắn muốn ${action} ${selectedPostIds.length} bài đăng đã chọn?`);
-}
 
-function approvePost(postId) {
-    if (confirm('Bạn có chắc chắn muốn duyệt bài đăng này?')) {
-        fetch(`/admin/posts/${postId}/approve`, {
-            method: 'PATCH',
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                showToast(data.message, 'success');
-                location.reload();
-            } else {
-                showToast('Có lỗi xảy ra', 'error');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            showToast('Có lỗi xảy ra', 'error');
-        });
-    }
-}
-
-function rejectPost(postId) {
-    currentPostId = postId;
-    openModal('reject-modal');
-}
-
-function submitReject(event) {
-    event.preventDefault();
-    
-    const reason = document.getElementById('reject-reason').value;
-    
-    fetch(`/admin/posts/${currentPostId}/reject`, {
-        method: 'PATCH',
-        headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ reason: reason })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            showToast(data.message, 'success');
-            closeModal('reject-modal');
-            location.reload();
-        } else {
-            showToast('Có lỗi xảy ra', 'error');
+    function confirmBulkAction() {
+        if (selectedPostIds.length === 0) {
+            showToast('Vui lòng chọn ít nhất một bài đăng', 'error');
+            return false;
         }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showToast('Có lỗi xảy ra', 'error');
-    });
-}
 
-function markReturnedPost(postId) {
-    if (confirm('Bạn có chắc chắn muốn đánh dấu bài đăng này là đã trả/tìm thấy?')) {
-        fetch(`/admin/posts/${postId}/mark-returned`, {
-            method: 'PATCH',
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                showToast(data.message, 'success');
-                location.reload();
-            } else {
+        const action = document.querySelector('select[name="action"]').value;
+        if (!action) {
+            showToast('Vui lòng chọn hành động', 'error');
+            return false;
+        }
+
+        return confirm(`Bạn có chắc chắn muốn ${action} ${selectedPostIds.length} bài đăng đã chọn?`);
+    }
+
+    function approvePost(postId) {
+        if (confirm('Bạn có chắc chắn muốn duyệt bài đăng này?')) {
+            fetch(`/admin/posts/${postId}/approve`, {
+                    method: 'PATCH',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showToast(data.message, 'success');
+                        location.reload();
+                    } else {
+                        showToast('Có lỗi xảy ra', 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showToast('Có lỗi xảy ra', 'error');
+                });
+        }
+    }
+
+    function rejectPost(postId) {
+        currentPostId = postId;
+        openModal('reject-modal');
+    }
+
+    function submitReject(event) {
+        event.preventDefault();
+
+        const reason = document.getElementById('reject-reason').value;
+
+        fetch(`/admin/posts/${currentPostId}/reject`, {
+                method: 'PATCH',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    reason: reason
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showToast(data.message, 'success');
+                    closeModal('reject-modal');
+                    location.reload();
+                } else {
+                    showToast('Có lỗi xảy ra', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
                 showToast('Có lỗi xảy ra', 'error');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            showToast('Có lỗi xảy ra', 'error');
-        });
+            });
     }
-}
 
-function openModal(modalId) {
-    document.getElementById(modalId).style.display = 'block';
-}
-
-function closeModal(modalId) {
-    document.getElementById(modalId).style.display = 'none';
-    if (modalId === 'reject-modal') {
-        document.getElementById('reject-reason').value = '';
+    function markReturnedPost(postId) {
+        if (confirm('Bạn có chắc chắn muốn đánh dấu bài đăng này là đã trả/tìm thấy?')) {
+            fetch(`/admin/posts/${postId}/mark-returned`, {
+                    method: 'PATCH',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showToast(data.message, 'success');
+                        location.reload();
+                    } else {
+                        showToast('Có lỗi xảy ra', 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showToast('Có lỗi xảy ra', 'error');
+                });
+        }
     }
-}
+
+    function openModal(modalId) {
+        document.getElementById(modalId).style.display = 'block';
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+        if (modalId === 'reject-modal') {
+            document.getElementById('reject-reason').value = '';
+        }
+    }
 </script>
 @endpush

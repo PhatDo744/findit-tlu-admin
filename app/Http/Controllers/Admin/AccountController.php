@@ -34,7 +34,7 @@ class AccountController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6',
+
             'status' => 'required|in:active,locked',
         ]);
 
@@ -56,7 +56,7 @@ class AccountController extends Controller
         if ($user->isAdmin()) {
             return response()->json(['error' => 'Không thể chỉnh sửa tài khoản admin'], 403);
         }
-        
+
         return response()->json($user);
     }
 

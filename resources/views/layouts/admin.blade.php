@@ -25,17 +25,48 @@
             background-color: var(--tlu-light-gray);
         }
 
-        .bg-tlu-blue { background-color: var(--tlu-blue); }
-        .text-tlu-blue { color: var(--tlu-blue); }
-        .text-tlu-dark-gray { color: var(--tlu-dark-gray); }
-        .bg-tlu-success { background-color: var(--tlu-success); }
-        .bg-tlu-error { background-color: var(--tlu-error); }
-        .border-tlu { border-color: #e5e7eb; }
+        .bg-tlu-blue {
+            background-color: var(--tlu-blue);
+        }
 
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: var(--tlu-light-gray); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb { background: var(--tlu-blue); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #003a70; }
+        .text-tlu-blue {
+            color: var(--tlu-blue);
+        }
+
+        .text-tlu-dark-gray {
+            color: var(--tlu-dark-gray);
+        }
+
+        .bg-tlu-success {
+            background-color: var(--tlu-success);
+        }
+
+        .bg-tlu-error {
+            background-color: var(--tlu-error);
+        }
+
+        .border-tlu {
+            border-color: #e5e7eb;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--tlu-light-gray);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--tlu-blue);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #003a70;
+        }
 
         .modal {
             display: none;
@@ -61,26 +92,36 @@
         }
 
         .btn {
+            padding: 16px;
             @apply px-4 py-2 rounded-md font-medium transition duration-200 inline-flex items-center;
         }
+
         .btn-primary {
-            @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500;
+            background-color: var(--tlu-blue);
+            color: var(--tlu-white);
+            @apply text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500;
         }
+
         .btn-secondary {
             @apply bg-gray-500 text-white hover:bg-gray-600 focus:ring-2 focus:ring-gray-400;
         }
+
         .btn-success {
             @apply bg-green-600 text-white hover:bg-green-700 focus:ring-2 focus:ring-green-500;
         }
+
         .btn-danger {
             @apply bg-red-600 text-white hover:bg-red-700 focus:ring-2 focus:ring-red-500;
         }
+
         .btn-warning {
             @apply bg-yellow-500 text-white hover:bg-yellow-600 focus:ring-2 focus:ring-yellow-400;
         }
+
         .btn-icon {
             @apply p-2 rounded-md hover:bg-gray-100 transition duration-200;
         }
+
         .btn-sm {
             @apply px-3 py-1 text-sm;
         }
@@ -162,15 +203,15 @@
             <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
                 <div class="container mx-auto px-6 py-8">
                     @if(session('success'))
-                        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
-                            <i class="fas fa-check-circle mr-2"></i>{{ session('success') }}
-                        </div>
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
+                        <i class="fas fa-check-circle mr-2"></i>{{ session('success') }}
+                    </div>
                     @endif
 
                     @if(session('error'))
-                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
-                            <i class="fas fa-exclamation-circle mr-2"></i>{{ session('error') }}
-                        </div>
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
+                        <i class="fas fa-exclamation-circle mr-2"></i>{{ session('error') }}
+                    </div>
                     @endif
 
                     @yield('content')
@@ -189,7 +230,7 @@
         document.addEventListener('click', function(event) {
             const dropdown = document.getElementById('user-dropdown');
             const button = event.target.closest('button');
-            
+
             if (!button || !button.onclick) {
                 dropdown.classList.add('hidden');
             }
@@ -199,9 +240,9 @@
             const toast = document.createElement('div');
             toast.className = `fixed top-4 right-4 px-6 py-3 rounded-lg text-white z-50 ${type === 'success' ? 'bg-green-500' : 'bg-red-500'}`;
             toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check' : 'fa-exclamation-triangle'} mr-2"></i>${message}`;
-            
+
             document.body.appendChild(toast);
-            
+
             setTimeout(() => {
                 toast.remove();
             }, 3000);
@@ -210,4 +251,5 @@
 
     @stack('scripts')
 </body>
+
 </html>

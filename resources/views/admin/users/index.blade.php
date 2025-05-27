@@ -9,8 +9,8 @@
         <h3 class="text-xl font-semibold text-tlu-dark-gray">Danh Sách Người Dùng Ứng Dụng</h3>
         <p class="text-sm text-gray-600 mt-1">Quản lý tài khoản người dùng sử dụng ứng dụng mobile FindIt@TLU</p>
     </div>
-    <button onclick="openModal('create-user-modal')" class="btn btn-primary">
-        <i class="fas fa-plus mr-2"></i>Thêm Người Dùng
+    <button onclick="openModal('create-user-modal')" class=" btn btn-primary">
+        <i class="text-xl px-2 fas fa-plus mr-2"></i>Thêm Người Dùng
     </button>
 </div>
 
@@ -23,8 +23,8 @@
             <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Hoạt động</option>
             <option value="locked" {{ request('status') === 'locked' ? 'selected' : '' }}>Bị khóa</option>
         </select>
-        <button type="submit" class="btn btn-secondary">
-            <i class="fas fa-search mr-2"></i>Tìm kiếm
+        <button type="submit" class="btn btn-primary">
+            <i class="text-xl px-2 fas fa-search mr-2"></i>Tìm kiếm
         </button>
     </form>
 </div>
@@ -49,7 +49,7 @@
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center">
                         <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                            <i class="fas fa-user text-blue-600"></i>
+                            <i class="text-xl px-2 fas fa-user text-blue-600"></i>
                         </div>
                         <div class="ml-3">
                             <div class="text-sm font-medium text-gray-900">{{ $user->name }}</div>
@@ -59,7 +59,7 @@
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $user->email }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="badge {{ $user->status === 'active' ? 'bg-tlu-success text-white' : 'bg-tlu-error text-white' }}">
+                    <span class="p-3 badge {{ $user->status === 'active' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
                         {{ $user->status_label }}
                     </span>
                 </td>
@@ -73,25 +73,25 @@
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $user->created_at->format('d/m/Y') }}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <button onclick="editUser({{ $user->id }})" class="btn btn-icon text-tlu-blue hover:text-blue-700" title="Chỉnh Sửa">
-                        <i class="fas fa-edit"></i>
+                        <i class="text-xl px-2 fas fa-edit"></i>
                     </button>
                     <a href="{{ route('admin.posts.index', ['user_id' => $user->id]) }}" class="btn btn-icon text-green-600 hover:text-green-700" title="Xem bài đăng">
-                        <i class="fas fa-file-alt"></i>
+                        <i class="text-xl px-2 fas fa-file-alt"></i>
                     </a>
                     <form method="POST" action="{{ route('admin.users.toggle-status', $user) }}" class="inline">
                         @csrf
                         @method('PATCH')
-                        <button type="submit" class="btn btn-icon {{ $user->status === 'active' ? 'text-orange-500 hover:text-orange-700' : 'text-green-500 hover:text-green-700' }}" 
-                                title="{{ $user->status === 'active' ? 'Khóa Tài Khoản' : 'Mở Khóa Tài Khoản' }}">
-                            <i class="fas {{ $user->status === 'active' ? 'fa-lock' : 'fa-unlock' }}"></i>
+                        <button type="submit" class="btn btn-icon {{ $user->status === 'active' ? 'text-orange-500 hover:text-orange-700' : 'text-green-500 hover:text-green-700' }}"
+                            title="{{ $user->status === 'active' ? 'Khóa Tài Khoản' : 'Mở Khóa Tài Khoản' }}">
+                            <i class="text-xl px-2 fas {{ $user->status === 'active' ? 'fa-lock' : 'fa-unlock' }}"></i>
                         </button>
                     </form>
                     <form method="POST" action="{{ route('admin.users.destroy', $user) }}" class="inline">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-icon text-tlu-error hover:text-red-700" title="Xóa" 
-                                onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này? Tất cả bài đăng của người dùng cũng sẽ bị xóa.')">
-                            <i class="fas fa-trash"></i>
+                        <button type="submit" class="btn btn-icon text-tlu-error hover:text-red-700" title="Xóa"
+                            onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này? Tất cả bài đăng của người dùng cũng sẽ bị xóa.')">
+                            <i class="text-xl px-2 fas fa-trash"></i>
                         </button>
                     </form>
                 </td>
@@ -100,7 +100,7 @@
             <tr>
                 <td colspan="7" class="px-6 py-4 text-center text-gray-500">
                     <div class="flex flex-col items-center justify-center py-8">
-                        <i class="fas fa-users text-gray-300 text-4xl mb-4"></i>
+                        <i class="text-xl px-2 fas fa-users text-gray-300 text-4xl mb-4"></i>
                         <p class="text-lg text-gray-500">Chưa có người dùng nào đăng ký</p>
                         <p class="text-sm text-gray-400 mt-2">Người dùng sẽ đăng ký thông qua ứng dụng mobile</p>
                     </div>
@@ -127,23 +127,23 @@
             <div class="grid grid-cols-1 gap-4">
                 <div>
                     <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Tên người dùng</label>
-                    <input type="text" name="name" id="name" required 
-                           class="w-full p-3 border border-gray-300 rounded-md focus:ring-tlu-blue focus:border-tlu-blue">
+                    <input type="text" name="name" id="name" required
+                        class="w-full p-3 border border-gray-300 rounded-md focus:ring-tlu-blue focus:border-tlu-blue">
                 </div>
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                    <input type="email" name="email" id="email" required 
-                           class="w-full p-3 border border-gray-300 rounded-md focus:ring-tlu-blue focus:border-tlu-blue">
+                    <input type="email" name="email" id="email" required
+                        class="w-full p-3 border border-gray-300 rounded-md focus:ring-tlu-blue focus:border-tlu-blue">
                 </div>
                 <div>
                     <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Mật khẩu</label>
-                    <input type="password" name="password" id="password" required 
-                           class="w-full p-3 border border-gray-300 rounded-md focus:ring-tlu-blue focus:border-tlu-blue">
+                    <input type="password" name="password" id="password"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:ring-tlu-blue focus:border-tlu-blue">
                 </div>
                 <div>
                     <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Trạng thái</label>
-                    <select name="status" id="status" required 
-                            class="w-full p-3 border border-gray-300 rounded-md focus:ring-tlu-blue focus:border-tlu-blue">
+                    <select name="status" id="status" required
+                        class="w-full p-3 border border-gray-300 rounded-md focus:ring-tlu-blue focus:border-tlu-blue">
                         <option value="active">Hoạt động</option>
                         <option value="locked">Bị khóa</option>
                     </select>
@@ -170,23 +170,23 @@
             <div class="grid grid-cols-1 gap-4">
                 <div>
                     <label for="edit-name" class="block text-sm font-medium text-gray-700 mb-2">Tên người dùng</label>
-                    <input type="text" name="name" id="edit-name" required 
-                           class="w-full p-3 border border-gray-300 rounded-md focus:ring-tlu-blue focus:border-tlu-blue">
+                    <input type="text" name="name" id="edit-name" required
+                        class="w-full p-3 border border-gray-300 rounded-md focus:ring-tlu-blue focus:border-tlu-blue">
                 </div>
                 <div>
                     <label for="edit-email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                    <input type="email" name="email" id="edit-email" required 
-                           class="w-full p-3 border border-gray-300 rounded-md focus:ring-tlu-blue focus:border-tlu-blue">
+                    <input type="email" name="email" id="edit-email" required
+                        class="w-full p-3 border border-gray-300 rounded-md focus:ring-tlu-blue focus:border-tlu-blue">
                 </div>
                 <div>
                     <label for="edit-password" class="block text-sm font-medium text-gray-700 mb-2">Mật khẩu mới (để trống nếu không đổi)</label>
-                    <input type="password" name="password" id="edit-password" 
-                           class="w-full p-3 border border-gray-300 rounded-md focus:ring-tlu-blue focus:border-tlu-blue">
+                    <input type="password" name="password" id="edit-password"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:ring-tlu-blue focus:border-tlu-blue">
                 </div>
                 <div>
                     <label for="edit-status" class="block text-sm font-medium text-gray-700 mb-2">Trạng thái</label>
-                    <select name="status" id="edit-status" required 
-                            class="w-full p-3 border border-gray-300 rounded-md focus:ring-tlu-blue focus:border-tlu-blue">
+                    <select name="status" id="edit-status" required
+                        class="w-full p-3 border border-gray-300 rounded-md focus:ring-tlu-blue focus:border-tlu-blue">
                         <option value="active">Hoạt động</option>
                         <option value="locked">Bị khóa</option>
                     </select>
