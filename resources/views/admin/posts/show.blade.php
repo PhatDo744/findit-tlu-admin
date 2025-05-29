@@ -97,7 +97,9 @@
                 <div class="space-y-3">
                     <div class="flex justify-between">
                         <span class="text-gray-600">Danh mục:</span>
-                        <span class="font-medium">{{ $post->category }}</span>
+                        <span class="badge bg-tlu-light-gray text-tlu-dark-gray">
+                            {{ $post->category->name ?? '-' }}
+                        </span>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-gray-600">Địa điểm:</span>

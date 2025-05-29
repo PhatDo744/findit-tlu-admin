@@ -35,9 +35,9 @@
 
         <select name="category" class="p-3 border border-gray-300 rounded-md focus:ring-tlu-blue focus:border-tlu-blue">
             <option value="">Tất cả danh mục</option>
-            @foreach($categories as $category)
-                <option value="{{ $category }}" {{ request('category') === $category ? 'selected' : '' }}>
-                    {{ $category }}
+            @foreach($categories as $cat)
+                <option value="{{ $cat->id }}" {{ request('category') == $cat->id ? 'selected' : '' }}>
+                    {{ $cat->name }}
                 </option>
             @endforeach
         </select>
@@ -71,7 +71,7 @@
 </div>
 
 <!-- Posts Table -->
-<div class="bg-white shadow-md rounded-lg overflow-x-auto">
+<div class="bg-white rounded-lg shadow overflow-hidden">
     <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-tlu-blue text-white">
             <tr>
@@ -81,7 +81,7 @@
                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Hình ảnh</th>
                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Tiêu đề</th>
                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Loại</th>
-                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Danh mục</th>
+                <th class="px-6 py-3">Danh mục</th>
                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Người đăng</th>
                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Trạng thái</th>
                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Ngày đăng</th>
@@ -112,8 +112,10 @@
                         {{ $post->type_label }}
                     </span>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {{ $post->category }}
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <span class="badge bg-tlu-light-gray text-tlu-dark-gray">
+                        {{ $post->category->name ?? '-' }}
+                    </span>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-sm text-gray-900">{{ $post->user->name }}</div>
@@ -320,7 +322,7 @@ function markReturnedPost(postId) {
             }
         })
         .then(response => response.json())
-        .then(data => {
+        .then data => {
             if (data.success) {
                 showToast(data.message, 'success');
                 location.reload();

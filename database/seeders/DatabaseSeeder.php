@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Seeder;
+use Database\Seeders\CategorySeeder;
 use App\Models\User;
 use App\Models\Post;
-use Illuminate\Database\Seeder;
+use App\Models\Category;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
@@ -14,6 +16,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Seed categories first
+        $this->call(CategorySeeder::class);
+
         // Create admin user
         User::create([
             'name' => 'Admin TLU',
@@ -42,7 +47,6 @@ class DatabaseSeeder extends Seeder
         $users->push($testUser);
 
         // Create test posts
-        $categories = ['Điện thoại', 'Laptop', 'Sách', 'Quần áo', 'Túi xách', 'Ví', 'Chìa khóa', 'Khác'];
         $locations = [
             'Tòa A - Thủy Lợi',
             'Tòa B - Thủy Lợi', 
@@ -82,6 +86,8 @@ class DatabaseSeeder extends Seeder
             'Thẻ sinh viên có tên'
         ];
 
+        $categories = Category::all();
+
         // Create lost posts
         foreach ($lostItems as $index => $item) {
             Post::create([
@@ -89,7 +95,7 @@ class DatabaseSeeder extends Seeder
                 'title' => "Mất $item",
                 'description' => "Tôi đã làm mất $item vào hôm qua. Nếu ai nhặt được xin vui lòng liên hệ với tôi. Tôi sẽ có phần thưởng xứng đáng cho người tìm thấy. Cảm ơn mọi người rất nhiều!",
                 'type' => 'lost',
-                'category' => $categories[array_rand($categories)],
+                'category_id' => $categories->random()->id,
                 'location' => $locations[array_rand($locations)],
                 'image_url' => "https://picsum.photos/400/300?random=" . ($index + 1),
                 'status' => ['pending', 'approved', 'rejected'][array_rand(['pending', 'approved', 'rejected'])],
@@ -104,7 +110,7 @@ class DatabaseSeeder extends Seeder
                 'title' => "Nhặt được $item",
                 'description' => "Tôi đã nhặt được $item. Chủ nhân của vật phẩm này vui lòng liên hệ với tôi để nhận lại. Tôi sẽ hỏi một số thông tin để xác minh chủ sở hữu. Mong sớm tìm được chủ nhân!",
                 'type' => 'found',
-                'category' => $categories[array_rand($categories)],
+                'category_id' => $categories->random()->id,
                 'location' => $locations[array_rand($locations)],
                 'image_url' => "https://picsum.photos/400/300?random=" . ($index + 11),
                 'status' => ['pending', 'approved'][array_rand(['pending', 'approved'])],
@@ -119,7 +125,7 @@ class DatabaseSeeder extends Seeder
                 'title' => "Đã tìm thấy " . $lostItems[array_rand($lostItems)],
                 'description' => "Cảm ơn mọi người đã giúp đỡ. Tôi đã tìm thấy vật phẩm của mình rồi!",
                 'type' => 'lost',
-                'category' => $categories[array_rand($categories)],
+                'category_id' => $categories->random()->id,
                 'location' => $locations[array_rand($locations)],
                 'image_url' => "https://picsum.photos/400/300?random=" . ($i + 21),
                 'status' => 'returned',

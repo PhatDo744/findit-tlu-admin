@@ -111,7 +111,6 @@
             </h3>
             <div class="text-xs text-blue-700 space-y-1">
                 <p><strong>Admin:</strong> admin@tlu.edu.vn / 123</p>
-                <p><strong>User:</strong> user@tlu.edu.vn / user123</p>
             </div>
         </div>
 

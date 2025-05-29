@@ -11,14 +11,15 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('category_id')->nullable()->constrained()->onDelete('set null');
             $table->string('title');
             $table->text('description');
             $table->enum('type', ['lost', 'found']);
-            $table->string('category');
             $table->string('location');
             $table->string('image_url')->nullable();
             $table->enum('status', ['pending', 'approved', 'rejected', 'returned'])->default('pending');
             $table->timestamps();
+            $table->index('category_id');
         });
     }
 

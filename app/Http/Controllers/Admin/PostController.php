@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Post::with('user');
+        $query = Post::with(['user', 'category']);
 
         // Search functionality
         if ($request->has('search') && $request->search) {
@@ -28,8 +29,8 @@ class PostController extends Controller
         }
 
         // Filter by category
-        if ($request->has('category') && $request->category) {
-            $query->where('category', $request->category);
+        if ($request->category) {
+            $query->where('category_id', $request->category);
         }
 
         // Filter by date range
@@ -43,12 +44,8 @@ class PostController extends Controller
 
         $posts = $query->latest()->paginate(15);
 
-        // Get categories for filter dropdown
-        $categories = Post::select('category')
-            ->distinct()
-            ->orderBy('category')
-            ->pluck('category');
-
+        // Get categories for dropdown
+        $categories = Category::active()->ordered()->get();
         return view('admin.posts.index', compact('posts', 'categories'));
     }
 
@@ -61,7 +58,7 @@ class PostController extends Controller
     public function approve(Post $post)
     {
         $post->update(['status' => 'approved']);
-        
+
         return response()->json([
             'success' => true,
             'message' => 'Bài đăng đã được duyệt thành công!'
@@ -78,7 +75,7 @@ class PostController extends Controller
             'status' => 'rejected',
             'rejection_reason' => $request->reason
         ]);
-        
+
         return response()->json([
             'success' => true,
             'message' => 'Bài đăng đã bị từ chối!'
@@ -88,7 +85,7 @@ class PostController extends Controller
     public function markReturned(Post $post)
     {
         $post->update(['status' => 'returned']);
-        
+
         return response()->json([
             'success' => true,
             'message' => 'Bài đăng đã được đánh dấu là đã trả/tìm thấy!'

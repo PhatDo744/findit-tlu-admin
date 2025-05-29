@@ -118,6 +118,10 @@
                 <a href="{{ route('admin.posts.index') }}" class="flex items-center px-6 py-3 text-white hover:bg-blue-700 {{ request()->routeIs('admin.posts.*') ? 'sidebar-active' : '' }}">
                     <i class="fas fa-file-alt mr-3"></i>Quản lý bài đăng
                 </a>
+                <a href="{{ route('admin.categories.index') }}"
+                   class="flex items-center px-6 py-3 text-white hover:bg-blue-700 {{ request()->routeIs('admin.categories.*') ? 'sidebar-active' : '' }}">
+                    <i class="fas fa-tags mr-3"></i>Quản lý danh mục
+                </a>
                 <a href="{{ route('admin.users.index') }}" class="flex items-center px-6 py-3 text-white hover:bg-blue-700 {{ request()->routeIs('admin.users.*') ? 'sidebar-active' : '' }}">
                     <i class="fas fa-users mr-3"></i>Người dùng App
                 </a>
